@@ -16,10 +16,11 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaLogin } from "@/app/schemaForm/schema";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
   const [exist, setExist] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
   const {
@@ -29,6 +30,13 @@ const page = () => {
   } = useForm({
     resolver: zodResolver(schemaLogin),
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/");
+    }
+  }, [isAuthenticated, router]);
+
   const onSubmit = async (data) => {
     try {
       const resp = await fetch("http://localhost:4000/api/auth/login", {
@@ -47,8 +55,9 @@ const page = () => {
         console.log("unauthorized, email no exist");
         setExist("Email o contraseña incorrectos");
       } else {
-        setExist(""); // Reset the email error if the request is successful
         router.push("/");
+        router.refresh();
+        setExist(""); // Reset the email error if the request is successful
         console.log("login correct");
       }
     } catch (error) {

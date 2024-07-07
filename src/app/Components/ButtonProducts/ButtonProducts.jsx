@@ -3,11 +3,11 @@ import { getProducts } from "@/api/api";
 import { useState } from "react";
 
 const ButtonProducts = () => {
-  const [products, setProducts] = useState([]);
+  const [data, setData] = useState([]);
 
   const get = async () => {
     const products = await getProducts();
-    setProducts(products);
+    setData(products);
     console.log(products);
   };
 
@@ -19,7 +19,7 @@ const ButtonProducts = () => {
       <div className="text-center ">
         <h2 className="text-sm">Products</h2>
       </div>
-      <div>{products.length > 0 && JSON.stringify(products)}</div>
+      <div>{data.length > 0 && JSON.stringify(data)}</div>
     </div>
   );
 };

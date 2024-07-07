@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -38,6 +38,7 @@ const Page = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       if (!resp.ok) {
         console.log("error en la peticion");
@@ -49,7 +50,7 @@ const Page = () => {
       } else {
         setExist(""); // Reset the email error if the request is successful
         router.push("/");
-        console.log("register correct");
+        router.refresh();
       }
     } catch (error) {
       console.log(error);
