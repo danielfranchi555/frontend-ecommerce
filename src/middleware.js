@@ -5,7 +5,7 @@ export async function middleware(request) {
   const token = request.cookies.get("access_token")?.value;
 
   if (token === undefined) {
-    return NextResponse.redirect(new URL("auth/login", request.url));
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
   try {
@@ -13,13 +13,12 @@ export async function middleware(request) {
       token,
       new TextEncoder().encode(process.env.JWT_KEY) //jose necesita formatear la clave del token
     );
-    console.log(payload);
     return NextResponse.next();
   } catch (error) {
-    return NextResponse.redirect(new URL("auth/login", request.url));
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 }
 
 export const config = {
-  matcher: ["/", "/cart"],
+  matcher: ["/", "/category/:path*", "/checkout/:path*", "/product/:path*"],
 };

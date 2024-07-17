@@ -1,6 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { schemaLogin } from "@/app/schemaForm/schema";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,15 +13,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { schemaLogin } from "@/app/schemaForm/schema";
-import React, { useEffect, useState } from "react";
+} from "../../../Components/ui/card";
+import { Label } from "@/Components/ui/label";
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 
 const page = () => {
   const [exist, setExist] = useState(false);

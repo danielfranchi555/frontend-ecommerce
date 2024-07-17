@@ -4,6 +4,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { redirect, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { schema } from "@/app/schemaForm/schema";
 import {
   Card,
   CardContent,
@@ -11,12 +15,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { Label } from "@/components/ui/label";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { schema } from "@/app/schemaForm/schema";
+} from "@/app/Components/ui/card";
+import { Input } from "@/app/Components/ui/input";
+import { Label } from "@/app/Components/ui/label";
 
 const Page = () => {
   const [exist, setExist] = useState(false);

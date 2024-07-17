@@ -17,12 +17,12 @@ const Hero = () => {
             Shop Now
           </button>
         </section>
-        <section className=" w-full h-full flex justify-center items-center md:w-[40%] lg:w-[40%] lg:pt-2 ">
+        <section className=" w-full h-full flex justify-center items-center md:w-[40%] lg:w-[40%]  ">
           <Image
             src="https://res.cloudinary.com/dcotr8wpa/image/upload/v1720388366/ecommerce/hero-ecommerce/hero-ecommerce_ihzvmu.png"
-            width={400}
+            width={500}
             height={400}
-            className="rounded-xl w-[290px] md:w-[340px] lg:w-[930px] h-full object-cover "
+            className="rounded-xl  h-full object-cover "
           />
         </section>
       </div>
