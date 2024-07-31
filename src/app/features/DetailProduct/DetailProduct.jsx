@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { useToast } from "@/Components/ui/use-toast";
-import { ToastAction } from "@/Components/ui/toast";
+import { Toast, ToastAction, ToastProvider } from "@/Components/ui/toast";
 import { resetCount } from "@/app/redux/slices/countSlice";
+import SelectedImage from "@/Components/SelectedImage/SelectedImage";
 
-const DetailProduct = ({ data, id_user }) => {
+const DetailProduct = ({ data, id_user, sizes, imagesRow }) => {
   const [cart, setCart] = useState([]); // Estado local para el carrito
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -63,40 +64,41 @@ const DetailProduct = ({ data, id_user }) => {
   }, [cart]);
 
   return (
-    <div className="flex flex-col w-full md:flex md:flex-row gap-4 ">
+    <div className="flex flex-col w-full md:flex md:flex-row mt-10 gap-4    ">
       {data ? (
         <>
-          <div className="md:w-[50%] bg-gray-100  flex items-center justify-center rounded-md">
-            <Image
-              src={data?.image_url}
-              width={900}
-              height={700}
-              alt="product-image"
-              className="drop-shadow-lg "
-            />
-          </div>
-          <div className="md:w-[50%] px-4 md:px-0  flex flex-col gap-8">
-            <div className="flex flex-col gap-2">
-              <p className="font-bold text-2xl" onClick={() => toaster()}>
-                {data?.name_product}
-              </p>
+          <SelectedImage data={data} imagesRow={imagesRow} />
+          <section className=" w-full flex flex-col md:flex md:flex-row  gap-4 md:w-[50%]">
+            <div className="  md:px-0  flex flex-col gap-8">
+              <div className="flex flex-col gap-2">
+                <p className="font-bold text-2xl">{data?.name_product}</p>
 
-              <p className="font-semibold text-2xl">${data?.price}</p>
+                <p className="font-semibold text-2xl">${data?.price}</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-bold">Description</p>
+                <p className="text-gray-500">{data?.description}</p>
+              </div>
+              <ul className="flex items-center gap-4">
+                <p>Talles:</p>
+                {sizes?.map((item) => (
+                  <li className="border px-2 cursor-pointer hover:bg-slate-100">
+                    {item.size_name}
+                    <span>Stock:{item.stock}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center gap-6  ">
+                <Count />
+                <Button
+                  onClick={() => addToCart()}
+                  className="bg-[#111827] shadow-md w-full  rounded-md text-white px-5 py-2 "
+                >
+                  Add to cart
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <p className="font-bold">Description</p>
-              <p className="text-gray-500">{data?.description}</p>
-            </div>
-            <div className="flex items-center gap-6  ">
-              <Count />
-              <Button
-                onClick={() => addToCart()}
-                className="bg-[#111827] shadow-md w-full  rounded-md text-white px-5 py-2 "
-              >
-                Add to cart
-              </Button>
-            </div>
-          </div>
+          </section>
         </>
       ) : (
         "loading"

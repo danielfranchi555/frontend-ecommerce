@@ -1,39 +1,53 @@
 "use client";
 import { schemaCheckout } from "@/app/schemaForm/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import Image from "next/image";
 import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
+import { MdDeleteOutline } from "react-icons/md";
 
-const FormCheckout = ({ id_user, productsCart }) => {
-  const cartProducts = useSelector((state) => state.cart.value);
+const FormCheckout = ({ id_user }) => {
+  const [productsCart, setProductsCart] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [confirm, setConfirm] = useState(false);
 
+  //get products from cart
+  const getCart = async () => {
+    const resp = await fetch(
+      `http://localhost:4000/api/cart/get-products/${id_user}`
+    );
+    const prods = await resp.json();
+    setProductsCart(prods);
+  };
+  //methods from react-hook-form
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schemaCheckout) });
 
-  const totalOrder = cartProducts.reduce(
+  const totalOrder = productsCart?.reduce(
     (acc, prod) => acc + prod.quantity * prod.price,
     0
   );
+
   const onSubmit = async (data) => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     try {
       const resp = await fetch("http://localhost:4000/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: id_user,
+          user_id: id_user,
           infoOrder: data,
-          totalAmount: totalOrder,
+          total_amount: totalOrder,
           productsCart,
         }),
       });
@@ -41,12 +55,55 @@ const FormCheckout = ({ id_user, productsCart }) => {
       if (!resp.ok) {
         console.log("error en la peticion");
       } else {
-        console.log("order generada");
+        setLoading(true);
+        setConfirm(true);
+      }
+
+      const respDelete = await fetch(
+        `http://localhost:4000/api/cart/remove-all-products`,
+        {
+          method: "DELETE",
+          body: JSON.stringify({ user_id: id_user }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!respDelete.ok) {
+        console.log("no se eliminaron los productos");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
+      reset();
     }
   };
+
+  const deleteProd = async (id_cart_item) => {
+    const object = {
+      user_id: id_user,
+      id_cart_item: id_cart_item,
+    };
+    const resp = await fetch(`http://localhost:4000/api/cart/remove-product`, {
+      method: "DELETE",
+      body: JSON.stringify(object),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!resp.ok) {
+      console.log("error delete product");
+    }
+
+    console.log("product deleted");
+  };
+
+  useEffect(() => {
+    getCart();
+  }, [productsCart]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -68,28 +125,28 @@ const FormCheckout = ({ id_user, productsCart }) => {
                 <div className="w-[50%]">
                   <Label htmlFor="terms">Your phone number</Label>
                   <Input
-                    name="phone"
-                    {...register("phone")}
+                    name="phone_number"
+                    {...register("phone_number")}
                     type="number"
                     placeholder="Phone"
                   />
-                  {errors.phone?.message && (
+                  {errors.phone_number?.message && (
                     <p className="text-xs text-red-400">
-                      {errors.phone?.message}
+                      {errors.phone_number?.message}
                     </p>
                   )}{" "}
                 </div>
                 <div className="w-[50%]">
                   <Label htmlFor="terms">Email Address</Label>
                   <Input
-                    name="email"
-                    {...register("email")}
+                    name="email_address"
+                    {...register("email_address")}
                     type="email"
                     placeholder="Email"
                   />
-                  {errors.email?.message && (
+                  {errors.email_address?.message && (
                     <p className="text-xs text-red-400">
-                      {errors.email?.message}
+                      {errors.email_address?.message}
                     </p>
                   )}{" "}
                 </div>
@@ -113,28 +170,28 @@ const FormCheckout = ({ id_user, productsCart }) => {
                 <div className="">
                   <Label htmlFor="terms">First name</Label>
                   <Input
-                    name="firstname"
-                    {...register("firstname")}
+                    name="first_name"
+                    {...register("first_name")}
                     type="text"
                     placeholder="firtsname"
                   />
-                  {errors.firstname?.message && (
+                  {errors.first_name?.message && (
                     <p className="text-xs text-red-400">
-                      {errors.firstname?.message}
+                      {errors.first_name?.message}
                     </p>
                   )}{" "}
                 </div>
                 <div className="">
                   <Label htmlFor="terms">Last Name</Label>
                   <Input
-                    name="lastname"
-                    {...register("lastname")}
+                    name="last_name"
+                    {...register("last_name")}
                     type="text"
                     placeholder="last name"
                   />
-                  {errors.lastname?.message && (
+                  {errors.last_name?.message && (
                     <p className="text-xs text-red-400">
-                      {errors.lastname?.message}
+                      {errors.last_name?.message}
                     </p>
                   )}{" "}
                 </div>
@@ -155,14 +212,14 @@ const FormCheckout = ({ id_user, productsCart }) => {
                 <div className="">
                   <Label htmlFor="terms">Postal Code</Label>
                   <Input
-                    name="postalcode"
+                    name="postal_code"
                     type="text"
                     placeholder="Postalcode"
-                    {...register("postalcode")}
+                    {...register("postal_code")}
                   />
-                  {errors.postalcode?.message && (
+                  {errors.postal_code?.message && (
                     <p className="text-xs text-red-400">
-                      {errors.postalcode?.message}
+                      {errors.postal_code?.message}
                     </p>
                   )}{" "}
                 </div>
@@ -174,7 +231,7 @@ const FormCheckout = ({ id_user, productsCart }) => {
             <div className=" flex flex-col gap-4 divide-y ">
               {productsCart
                 ? productsCart.map((prod) => (
-                    <div className="flex text-sm py-4">
+                    <div className="flex text-sm py-4 ">
                       <div className="flex gap-2 w-full">
                         <Image
                           src={prod.img_url}
@@ -191,8 +248,13 @@ const FormCheckout = ({ id_user, productsCart }) => {
                           <p className="">Quantity: {prod.quantity}</p>
                         </div>
                       </div>
-                      <div className=" flex items-center justify-center">
+                      <div className=" flex flex-col gap-2 items-center justify-center">
                         <span className="font-bold">${prod.price}</span>
+                        <MdDeleteOutline
+                          onClick={() => deleteProd(prod.id_cart_item)}
+                          className="cursor-pointer"
+                          size={25}
+                        />
                       </div>
                     </div>
                   ))
@@ -211,9 +273,20 @@ const FormCheckout = ({ id_user, productsCart }) => {
                 <p>Order Total</p>
                 <span>${totalOrder}</span>
               </div>
-              <Button type="submit" className="w-full rounded-md shadow-md">
-                Confirm Order
-              </Button>
+              {confirm ? (
+                <Button>Confirmed</Button>
+              ) : (
+                <Button
+                  type="submit"
+                  className={`w-full rounded-md shadow-md ${
+                    productsCart?.length > 0
+                      ? "bg-red-100"
+                      : "bg-red-950 disabled:opacity-100"
+                  }`}
+                >
+                  {loading ? <p>LOADING</p> : <p>confirm order</p>}
+                </Button>
+              )}
             </div>
           </article>
         </div>

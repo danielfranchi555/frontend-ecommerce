@@ -68,9 +68,23 @@
 
   @layer base {
     * {
-      @apply border-border;
     }
     body {
       @apply bg-background text-foreground;
+      animate-spin{
+        animation: spin 1s linear infinite;
+  
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      }
     }
+
   }
+
+

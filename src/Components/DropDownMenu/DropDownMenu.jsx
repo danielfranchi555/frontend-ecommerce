@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { IoExitOutline } from "react-icons/io5";
+import { Profile } from "../Profile/Profile";
 
 const DropDownMenu = () => {
   const test = () => {
@@ -20,16 +21,16 @@ const DropDownMenu = () => {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <Profile />
         <DropdownMenuItem>Orders</DropdownMenuItem>
-        <DropdownMenuItem>
-          <button
-            onClick={() => test()}
-            className="flex justify-between w-full items-center"
-          >
+        <button
+          onClick={() => test()}
+          className="flex justify-between w-full items-center"
+        >
+          <DropdownMenuItem>
             Log Out <IoExitOutline size={22} />
-          </button>
-        </DropdownMenuItem>
+          </DropdownMenuItem>
+        </button>
       </DropdownMenuContent>
     </DropdownMenu>
   );

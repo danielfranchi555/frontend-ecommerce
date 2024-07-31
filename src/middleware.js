@@ -13,6 +13,8 @@ export async function middleware(request) {
       token,
       new TextEncoder().encode(process.env.JWT_KEY) //jose necesita formatear la clave del token
     );
+    console.log({ middleware: payload });
+
     return NextResponse.next();
   } catch (error) {
     return NextResponse.redirect(new URL("/auth/login", request.url));

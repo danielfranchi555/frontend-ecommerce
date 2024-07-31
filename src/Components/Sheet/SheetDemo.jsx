@@ -106,7 +106,7 @@ const SheetDemo = ({ id_user }) => {
                   >
                     <Image
                       src={item.img_url}
-                      width={100}
+                      width={50}
                       height={100}
                       alt="cart-image"
                       className=" rounded-md drop-shadow-lg"
