@@ -40,10 +40,7 @@ const Page = ({ params }) => {
     getProduct();
   }, []);
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-  console.log(product);
+  const onSubmit = (data) => {};
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>

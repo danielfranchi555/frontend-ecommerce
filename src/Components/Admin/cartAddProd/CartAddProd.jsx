@@ -39,7 +39,6 @@ const CartAddProd = () => {
       image_url: data.image_url,
       sizes: data.sizes,
     };
-    console.log(object);
     // Aquí puedes realizar la llamada a la API para enviar object a la base de datos
   };
 

@@ -1,8 +1,12 @@
 // "use client";
 import DetailProduct from "@/app/features/DetailProduct/DetailProduct";
+import CarouselDetail from "@/Components/CarouselDetail/CarouselDetail";
 import CarouselImages from "@/Components/CarouselImages/CarouselImages";
+import Count from "@/Components/Count/Count";
 import ProductCard from "@/Components/ProductCard/ProductCard";
+import { Button } from "@/Components/ui/button";
 import { getSession } from "@/lib/getUser";
+import Image from "next/image";
 
 const page = async ({ params }) => {
   const session = await getSession();
@@ -20,16 +24,19 @@ const page = async ({ params }) => {
     `http://localhost:4000/api/products/category/${category}`
   );
   const data = await resp.json();
-  console.log(data);
 
   return (
-    <div className=" w-[85%] mx-auto mt-10 md:mt-0 md:w-[90%] md:mx-auto flex flex-col items-center justify-center">
-      <DetailProduct
-        data={product[0]}
-        id_user={id_user}
-        sizes={sizes}
-        imagesRow={imagesRow}
-      />
+    <div className=" w-full md:container flex-grow">
+      {/* detalle del product */}
+      <section className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-5 ">
+        <CarouselDetail imagesRow={imagesRow} product={product} />
+        <DetailProduct
+          data={product[0]}
+          id_user={id_user}
+          sizes={sizes}
+          imagesRow={imagesRow}
+        />
+      </section>
       <CarouselImages data={data} />
     </div>
   );

@@ -2,22 +2,18 @@ import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 
 export async function getSession() {
-  const token = cookies().get("token");
-  if (token) {
-    try {
-      const { payload } = await jwtVerify(
-        token,
-        new TextEncoder().encode("your-secret-key")
-      );
-      return payload;
-    } catch (error) {
-      return null;
-    }
-  }
-  return null;
-}
+  const token = cookies().get("access_token").value;
 
-export default async function handler(req, res) {
-  const session = await getSession();
-  res.status(200).json({ session });
+  if (!token) {
+    console.log("no existe el token");
+  }
+  try {
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_KEY)
+    );
+    return payload;
+  } catch (error) {
+    console.log({ message: error });
+  }
 }

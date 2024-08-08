@@ -11,7 +11,7 @@ import {
 import { IoExitOutline } from "react-icons/io5";
 import { Profile } from "../Profile/Profile";
 
-const DropDownMenu = () => {
+const DropDownMenu = ({ id_user }) => {
   const test = () => {
     clearCookie();
   };
@@ -21,14 +21,14 @@ const DropDownMenu = () => {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Profile />
-        <DropdownMenuItem>Orders</DropdownMenuItem>
+        <Profile id_user={id_user} />
+        <DropdownMenuItem className="cursor-pointer">Orders</DropdownMenuItem>
         <button
           onClick={() => test()}
           className="flex justify-between w-full items-center"
         >
-          <DropdownMenuItem>
-            Log Out <IoExitOutline size={22} />
+          <DropdownMenuItem className=" w-full flex items-center justify-between cursor-pointer">
+            <span>Log Out</span> <IoExitOutline size={22} />
           </DropdownMenuItem>
         </button>
       </DropdownMenuContent>

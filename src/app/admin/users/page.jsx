@@ -13,7 +13,6 @@ import { Button } from "@/Components/ui/button";
 const page = async () => {
   const resp = await fetch("http://localhost:4000/api/usersByAdmin");
   const data = await resp.json();
-  console.log(data);
   return (
     <div>
       <h4>Users</h4>
