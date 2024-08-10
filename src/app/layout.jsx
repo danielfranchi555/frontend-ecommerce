@@ -3,7 +3,7 @@ import "./globals.css";
 import StoreProvider from "./redux/StoreProvider";
 import { Toaster } from "../Components/ui/toaster";
 import { CartProvider } from "./Context/CartProvider";
-
+import ProviderApi from "./redux/ProviderApi/ProviderApi";
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] });
 
 export const metadata = {
@@ -15,12 +15,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <StoreProvider>
-          <CartProvider>
-            <main>{children}</main>
-            <Toaster />
-          </CartProvider>
-        </StoreProvider>
+        <ProviderApi>
+          <StoreProvider>
+            <CartProvider>
+              <main>{children}</main>
+              <Toaster />
+            </CartProvider>
+          </StoreProvider>
+        </ProviderApi>
       </body>
     </html>
   );

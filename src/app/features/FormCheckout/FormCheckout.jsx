@@ -107,9 +107,9 @@ const FormCheckout = ({ id_user }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="w-[90%] mx-auto mt-16 ">
-        <div className="grid grid-cols-2 gap-4  ">
-          <article className=" flex flex-col gap-8 ">
+      <div className="w-[90%] mx-auto mt-16 flex flex-col">
+        <div className=" grid grid-cols-1 gap-10 md:grid md:grid-cols-2 md:gap-4  ">
+          <article className=" flex flex-col gap-8">
             <div className="border rounded-md flex flex-col gap-2  ">
               <div className="border-b px-4 rounded-md flex gap-4 items-center  w-full h-full py-4 ">
                 <div className="flex items-center gap-2 ">
@@ -121,8 +121,11 @@ const FormCheckout = ({ id_user }) => {
                   <h3 className="text">Contact Info</h3>
                 </div>
               </div>
-              <div action="" className="flex gap-4 text-sm px-4 py-4">
-                <div className="w-[50%]">
+              <div
+                action=""
+                className="flex flex-col gap-4 md:flex-row w-full md:gap-4 text-sm px-4 py-4  "
+              >
+                <div className="w-full md:w-[50%] ">
                   <Label htmlFor="terms">Your phone number</Label>
                   <Input
                     name="phone_number"
@@ -136,7 +139,7 @@ const FormCheckout = ({ id_user }) => {
                     </p>
                   )}{" "}
                 </div>
-                <div className="w-[50%]">
+                <div className="w-full md:w-[50%]">
                   <Label htmlFor="terms">Email Address</Label>
                   <Input
                     name="email_address"
@@ -165,7 +168,7 @@ const FormCheckout = ({ id_user }) => {
               </div>
               <div
                 action=""
-                className="grid grid-cols-2 gap-4 text-sm px-4 py-4"
+                className="grid grid-cols-1 md:grid md:grid-cols-2 gap-4 text-sm px-4 py-4 "
               >
                 <div className="">
                   <Label htmlFor="terms">First name</Label>
@@ -226,7 +229,7 @@ const FormCheckout = ({ id_user }) => {
               </div>
             </div>
           </article>
-          <article className=" border-blue-500 divide-y ">
+          <article className=" border-blue-500 divide-y order-1 md:order-2">
             <h3 className="font-bold text-2xl ">Order Summary</h3>
             <div className=" flex flex-col gap-4 divide-y ">
               {productsCart
@@ -238,14 +241,15 @@ const FormCheckout = ({ id_user }) => {
                           width={100}
                           height={100}
                           alt="image-prod"
-                          className=" bg-gray-100 rounded-md drop-shadow-md"
+                          className=" bg-gray-100 rounded-md drop-shadow-md w-[90px] md:w-[100px]"
                         />
                         <div className="flex flex-col  w-full h-full ">
                           <p className="font-bold">
                             {" "}
                             {prod.name_product.toUpperCase()}
                           </p>
-                          <p className="">Quantity: {prod.quantity}</p>
+                          <p className="">Cantidad: {prod.quantity}</p>
+                          <p className="">Talle: {prod.size}</p>
                         </div>
                       </div>
                       <div className=" flex flex-col gap-2 items-center justify-center">
@@ -276,14 +280,7 @@ const FormCheckout = ({ id_user }) => {
               {confirm ? (
                 <Button>Confirmed</Button>
               ) : (
-                <Button
-                  type="submit"
-                  className={`w-full rounded-md shadow-md ${
-                    productsCart?.length > 0
-                      ? "bg-red-100"
-                      : "bg-red-950 disabled:opacity-100"
-                  }`}
-                >
+                <Button type="submit" className="w-full">
                   {loading ? <p>LOADING</p> : <p>confirm order</p>}
                 </Button>
               )}

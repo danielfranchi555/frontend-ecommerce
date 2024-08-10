@@ -17,18 +17,19 @@ const DropDownMenu = ({ id_user }) => {
   };
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>Account</DropdownMenuTrigger>
+      <DropdownMenuTrigger>Cuenta</DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Profile id_user={id_user} />
-        <DropdownMenuItem className="cursor-pointer">Orders</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">Ordenes</DropdownMenuItem>
         <button
           onClick={() => test()}
           className="flex justify-between w-full items-center"
         >
-          <DropdownMenuItem className=" w-full flex items-center justify-between cursor-pointer">
-            <span>Log Out</span> <IoExitOutline size={22} />
+          <DropdownMenuItem className=" w-full flex items-center justify-between cursor-pointer  gap-2">
+            <span className="">Cerrar Sesion</span>
+            <IoExitOutline className="" size={22} />
           </DropdownMenuItem>
         </button>
       </DropdownMenuContent>

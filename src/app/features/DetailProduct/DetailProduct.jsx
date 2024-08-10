@@ -4,18 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { useToast } from "@/Components/ui/use-toast";
-import { ToastAction } from "@/Components/ui/toast";
+import { useAddProductMutation } from "@/app/redux/slices/ApiSlice/cartApiSlice";
 import { resetCount } from "@/app/redux/slices/countSlice";
-import { addCart } from "@/app/redux/slices/carSlice";
 
 const DetailProduct = ({ data, id_user, sizes }) => {
   const { toast } = useToast();
   const count = useSelector((state) => state.count.value);
-  const cart = useSelector((state) => state.cart.value);
+  const [addProduct, { isSuccess, isLoading }] = useAddProductMutation();
+  const [size, setSize] = useState("");
   const dispatch = useDispatch();
 
-  const [select, setSelect] = useState(0);
-
+  //product para la funcion addToCart
   const object = {
     user_id: id_user,
     cart_items: [
@@ -25,15 +24,38 @@ const DetailProduct = ({ data, id_user, sizes }) => {
         price: data.price,
         img_url: data.image_url,
         name_product: data.name_product,
+        size: size,
       },
     ],
   };
-
-  const addToCart = () => {
-    console.log(object.cart_items[0]);
-    dispatch(addCart(object.cart_items[0]));
+  //product para el toast
+  const product = {
+    name: data.name_product,
+    quantity: count,
   };
-  console.log(cart);
+
+  const addSize = (item, index) => {
+    setSize(item);
+    console.log({ item: item, index: index });
+  };
+
+  const addToCart = async () => {
+    if (size === "") {
+      console.log("elegir el talle");
+      toast({
+        title: "Elegir un talle  ",
+        description: `Porfavor elegir un talle antes de continuar con la compra`,
+      });
+    } else {
+      addProduct(object);
+      toast({
+        title: "Producto Agregado ",
+        description: `Producto: ${product.name}, Cantidad: ${product.quantity}, talle: ${size}`,
+      });
+      dispatch(resetCount());
+      setSize("");
+    }
+  };
 
   return (
     <div className="col-span-3 px-4">
@@ -41,13 +63,13 @@ const DetailProduct = ({ data, id_user, sizes }) => {
         <h1 className="text-3xl ">{data.name_product}</h1>
         <h2 className="font-bold text-2xl">${data.price}</h2>
         <div className="flex gap-4">
-          <span className="font-bold">Talles:</span>
+          <span className="font-bold">Talles Disponibles:</span>
           {sizes?.map((item, index) => (
             <span
               key={index}
-              onClick={() => setSelect(index)}
+              onClick={() => addSize(item.size_name, index)}
               className={`text-black border px-2 rounded-md hover:bg-slate-200 cursor-pointer ${
-                select === index ? "bg-slate-200" : ""
+                size === item.size_name ? "bg-slate-200" : ""
               }`}
             >
               {item.size_name}

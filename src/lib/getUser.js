@@ -6,12 +6,15 @@ export async function getSession() {
 
   if (!token) {
     console.log("no existe el token");
+    localStorage.clear();
   }
   try {
     const { payload } = await jwtVerify(
       token,
       new TextEncoder().encode(process.env.JWT_KEY)
     );
+    console.log(payload);
+
     return payload;
   } catch (error) {
     console.log({ message: error });

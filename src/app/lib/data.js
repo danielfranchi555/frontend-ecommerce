@@ -4,7 +4,9 @@ export const fetchProducts = async (category, query) => {
       ? `http://localhost:4000/api/products/category/${category}?price=${query}`
       : `http://localhost:4000/api/products/category/${category}`;
 
-    const resp = await fetch(url);
+    const resp = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
     if (!resp.ok) {
       throw new Error(`HTTP error! status: ${resp.status}`);
     }

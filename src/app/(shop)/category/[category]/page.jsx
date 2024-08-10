@@ -4,7 +4,6 @@ import ProductCard from "@/Components/ProductCard/ProductCard";
 const Page = async ({ searchParams, params }) => {
   const category = params.category;
   const query = searchParams.price;
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
   const data = await fetchProducts(category, query);
   console.log(data);
 
@@ -14,9 +13,9 @@ const Page = async ({ searchParams, params }) => {
         {data?.products.map((item) => (
           <div className="border rounded-md hover:shadow-md transition-all duration-300 w-full bg-none">
             <ProductCard item={item} key={item.id_product} />
-            <div className="flex justify-between px-2 py-2  h-[54px] w-full rounded-md">
-              <p className="text-sm">{item.name_product}</p>
-              <p className="text-sm font-bold">${item.price}</p>
+            <div className="flex flex-col justify-between gap-1 md:flex-row md:py-4 md:px-2 px-1 w-full h-[55px] rounded-md ">
+              <p className="text-xs md:text-[14px]">{item.name_product}</p>
+              <p className="text-xs font-bold md:text-[14px]">${item.price}</p>
             </div>
           </div>
         ))}

@@ -8,7 +8,7 @@ const BestSeller = ({ products }) => {
       <h4 className="text-center text-2xl font-bold py-4 text-black">
         Best Seller
       </h4>
-      <div className="grid grid-cols-2 md:grid md:grid-cols-5 gap-4 w-full">
+      <div className="grid grid-cols-2 w-[97%] mx-auto md:grid md:grid-cols-5 gap-4 ">
         {products.slice(0, 10).map((item) => (
           <div className="border rounded-md hover:shadow-md transition-all duration-300">
             <ProductCard item={item} />

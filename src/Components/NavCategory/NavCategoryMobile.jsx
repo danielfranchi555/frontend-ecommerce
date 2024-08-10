@@ -30,7 +30,7 @@ const NavCategoryMobile = () => {
   ];
 
   return (
-    <div className="flex justify-between w-full border md:hidden">
+    <div className="flex justify-between w-full  md:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">Categories</Button>

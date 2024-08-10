@@ -45,7 +45,7 @@ const NavCategorie = () => {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="text-1xl">
-            Categories
+            Categorias
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[200px] gap-3 p-0 md:w-[200px] md:flex md:flex-col lg:w-[200px] ">

@@ -4,8 +4,6 @@ import ProductCard from "@/Components/ProductCard/ProductCard";
 import Link from "next/link";
 
 export default async function page({ searchParams }) {
-  console.log(searchParams);
-  // await new Promise((resolve) => setTimeout(resolve, 5000));
   const resp = await fetch(
     `http://localhost:4000/api/search?q=${searchParams.query}`
   );
@@ -13,13 +11,20 @@ export default async function page({ searchParams }) {
   const data = await resp.json();
 
   return (
-    <div className=" mt-5 flex-grow container w-full  min-h-screen">
+    <div className=" mt-5 flex-grow container w-full  min-h-screen ">
       <h1 className="text-2xl font-bold pb-4">
         {" "}
         {data.length > 0 ? <p>Buscando: "{searchParams.query}" </p> : ""}
       </h1>
       {/* <Filter /> */}
-      <div className="grid  grid-cols-2 md:grid md:grid-cols-5 gap-2 w-full h-full">
+      <div></div>
+      <div
+        className={`  ${
+          data.length > 0
+            ? "grid  grid-cols-2  md:grid md:grid-cols-5"
+            : "flex w-full h-full items-center justify-center md:flex md:w-full md:justify-center md:items-center md:h-full"
+        } gap-2 w-full h-full`}
+      >
         {data.length > 0 ? (
           data.map((item) => (
             <Link href={`/product/${item.id_product}`}>
@@ -33,9 +38,9 @@ export default async function page({ searchParams }) {
             </Link>
           ))
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-red-200">
-            <p className="text-2xl">Producto no encontrado</p>
-          </div>
+          <p className="text-1xl">
+            <span className="font-bold">Resultado</span>: Producto no encontrado
+          </p>
         )}
       </div>
     </div>

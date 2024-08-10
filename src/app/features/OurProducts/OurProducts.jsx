@@ -36,6 +36,7 @@ const ProductCarousel = ({ products }) => {
         "https://res.cloudinary.com/dcotr8wpa/image/upload/v1722109396/tienda/remeras/Graphic%20Set%20In%20Neck%20Trekking/1_jvoeat.webp",
     },
   ];
+
   return (
     <div className="my-20 md:container">
       <h4 className="text-center text-2xl font-bold text-black py-2">
@@ -47,10 +48,18 @@ const ProductCarousel = ({ products }) => {
           <Fade>
             <div className="relative w-full h-full md:cursor-pointer md:hover:shadow-md md:transform md:transition md:duration-300 md:hover:scale-[1.01]">
               <Link href={item.href}>
-                <Image src={item.image} width={350} height={200} alt="image" />
+                <Image
+                  src={item.image}
+                  width={350}
+                  height={200}
+                  alt="image"
+                  className="w-full"
+                />
                 <div className="w-full h-full bg-black/30 absolute top-0"></div>
                 <div className="w-full h-full flex justify-center items-center absolute top-0">
-                  <p className="text-white text-2xl">{item.name}</p>
+                  <p className="text-white font-bold text-3xl md:text-xl">
+                    {item.name}
+                  </p>
                 </div>
               </Link>
             </div>

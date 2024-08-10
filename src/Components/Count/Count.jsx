@@ -10,13 +10,19 @@ const Count = () => {
 
   return (
     <div>
-      <div className="bg-[#f6f6f8] flex items-center gap-4   max-w-max rounded-md px-4 py-[10px] ">
+      <div className="bg-slate-100 flex items-center gap-4   max-w-max rounded-md px-4 py-[10px] ">
         <button onClick={() => dispatch(decrement())}>
-          <FiMinus size={22} className="cursor-pointer bg-white rounded-full" />
+          <FiMinus
+            size={22}
+            className="cursor-pointer bg-white rounded-full px-1"
+          />
         </button>
         <span>{countValue}</span>
         <button onClick={() => dispatch(increment())}>
-          <MdAdd size={22} className="cursor-pointer bg-white rounded-full" />
+          <MdAdd
+            size={22}
+            className="cursor-pointer bg-white rounded-full px-1"
+          />
         </button>
       </div>
     </div>

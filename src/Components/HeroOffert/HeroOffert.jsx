@@ -20,7 +20,7 @@ const HeroOffert = () => {
         <h4 className=" text-2xl md:text-6xl  text-white">
           Descubre las mejores tendencias de moda
         </h4>
-        <Button>Ver mas</Button>
+        <Button className="px-8 py-6 ">Ver mas</Button>
       </div>
     </Fade>
   );
